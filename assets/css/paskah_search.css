@@ -1,0 +1,70 @@
+/**
+ * FILE: assets/css/paskah_search.css
+ * AUTHOR: Paskah - Anggota Tim
+ * FUNGSI: Styling untuk fitur Search/Pencarian Cuaca
+ * DESKRIPSI: CSS khusus untuk komponen pencarian cuaca
+ * 
+ * TUGAS PASKAH:
+ * 1. Buat styling untuk search form yang menarik
+ * 2. Implementasikan autocomplete dropdown styling
+ * 3. Buat card layout untuk hasil pencarian
+ * 4. Tambahkan loading states dan animations
+ * 5. Buat responsive design untuk mobile
+ * 6. Implementasikan hover effects dan transitions
+ */
+
+/* TODO PASKAH: Implementasikan CSS untuk fitur search */
+
+/* Search Container */
+.search-container {
+    /* TODO: Styling container utama */
+}
+
+/* Search Form */
+.search-form {
+    /* TODO: Styling form pencarian */
+}
+
+/* Search Input */
+.search-input {
+    /* TODO: Styling input field */
+}
+
+/* Autocomplete Dropdown */
+.autocomplete-dropdown {
+    /* TODO: Styling dropdown suggestions */
+}
+
+/* Search Results */
+.search-results {
+    /* TODO: Styling hasil pencarian */
+}
+
+/* Result Card */
+.result-card {
+    /* TODO: Styling card untuk setiap hasil */
+}
+
+/* Search History */
+.search-history {
+    /* TODO: Styling history pencarian */
+}
+
+/* Loading States */
+.search-loading {
+    /* TODO: Styling loading animation */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    /* TODO: Mobile responsive styles */
+}
+
+/* 
+CATATAN UNTUK PASKAH:
+- Gunakan color scheme yang konsisten dengan tema aplikasi
+- Implementasikan smooth transitions dan hover effects
+- Pastikan accessibility (focus states, contrast)
+- Buat loading animations yang menarik
+- Test di berbagai ukuran layar
+*/

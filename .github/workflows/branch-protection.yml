@@ -1,0 +1,209 @@
+name: Branch Protection & Team Notifications
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+    types: [opened, synchronize, reopened, closed]
+
+jobs:
+  # Notify team about important changes
+  team-notification:
+    name: Team Notifications
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Analyze PR changes
+      id: analyze
+      run: |
+        echo "Analyzing PR changes..."
+        
+        # Get changed files
+        changed_files=$(gh api repos/${{ github.repository }}/pulls/${{ github.event.number }}/files --jq '.[].filename')
+        
+        # Check which team member's files are affected
+        paskah_affected=false
+        riza_affected=false
+        sylvian_affected=false
+        core_affected=false
+        
+        echo "$changed_files" | while read file; do
+          case "$file" in
+            *paskah*)
+              echo "paskah_affected=true" >> $GITHUB_OUTPUT
+              ;;
+            *riza*)
+              echo "riza_affected=true" >> $GITHUB_OUTPUT
+              ;;
+            *sylvian*)
+              echo "sylvian_affected=true" >> $GITHUB_OUTPUT
+              ;;
+            functions/*|config.php|index.php|process.php)
+              echo "core_affected=true" >> $GITHUB_OUTPUT
+              ;;
+          esac
+        done
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Comment on PR
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const { data: files } = await github.rest.pulls.listFiles({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number,
+          });
+          
+          let affectedMembers = [];
+          let coreChanged = false;
+          
+          files.forEach(file => {
+            if (file.filename.includes('paskah')) {
+              affectedMembers.push('Paskah (Search Feature)');
+            }
+            if (file.filename.includes('riza')) {
+              affectedMembers.push('Riza (Geography Feature)');
+            }
+            if (file.filename.includes('sylvian')) {
+              affectedMembers.push('Sylvian (Weather Map Feature)');
+            }
+            if (file.filename.match(/^(functions|config\.php|index\.php|process\.php)/)) {
+              coreChanged = true;
+            }
+          });
+          
+          let comment = '## 🔍 PR Analysis\n\n';
+          
+          if (affectedMembers.length > 0) {
+            comment += '**Team Members Affected:**\n';
+            affectedMembers.forEach(member => {
+              comment += `- 👤 ${member}\n`;
+            });
+            comment += '\n';
+          }
+          
+          if (coreChanged) {
+            comment += '⚠️ **Core files modified** - All team members should review\n\n';
+          }
+          
+          comment += '**Files Changed:** ' + files.length + '\n';
+          comment += '**Lines Added:** ' + files.reduce((sum, file) => sum + file.additions, 0) + '\n';
+          comment += '**Lines Deleted:** ' + files.reduce((sum, file) => sum + file.deletions, 0) + '\n\n';
+          
+          comment += '---\n*Automated analysis by GitHub Actions* 🤖';
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
+
+  # Protect main branch from direct pushes
+  main-branch-protection:
+    name: Main Branch Protection Check
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Check if push is from PR merge
+      run: |
+        echo "🔒 Checking main branch push..."
+        
+        # This job will run but we can add additional checks here
+        # In a real scenario, you'd configure branch protection rules in GitHub settings
+        
+        if [[ "${{ github.event.head_commit.message }}" == *"Merge pull request"* ]]; then
+          echo "✅ Push is from PR merge - allowed"
+        else
+          echo "⚠️ Direct push to main branch detected"
+          echo "Please use pull requests for code changes"
+        fi
+
+  # Merge conflict detection
+  merge-conflict-check:
+    name: Merge Conflict Detection
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Check for merge conflicts
+      run: |
+        echo "🔍 Checking for potential merge conflicts..."
+        
+        # Fetch the target branch
+        git fetch origin ${{ github.event.pull_request.base.ref }}
+        
+        # Try to merge (dry run)
+        if git merge-tree $(git merge-base HEAD origin/${{ github.event.pull_request.base.ref }}) HEAD origin/${{ github.event.pull_request.base.ref }} | grep -q "<<<<<<< "; then
+          echo "❌ Merge conflicts detected!"
+          echo "Please resolve conflicts before merging"
+          exit 1
+        else
+          echo "✅ No merge conflicts detected"
+        fi
+
+  # Team task completion check
+  team-progress-check:
+    name: Team Progress Check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Check team progress
+      run: |
+        echo "📊 Checking team progress..."
+        
+        total_features=3
+        completed_features=0
+        
+        # Check Paskah's search feature
+        if [ -f "features/paskah_search.php" ] && [ -f "assets/js/paskah_search.js" ] && [ -f "assets/css/paskah_search.css" ]; then
+          echo "✅ Paskah's Search Feature: Complete"
+          completed_features=$((completed_features + 1))
+        else
+          echo "🔄 Paskah's Search Feature: In Progress"
+        fi
+        
+        # Check Riza's geography feature
+        if [ -f "features/riza_geography_enhanced.php" ] && [ -f "assets/js/riza_geography.js" ] && [ -f "assets/css/riza_geography.css" ]; then
+          echo "✅ Riza's Geography Feature: Complete"
+          completed_features=$((completed_features + 1))
+        else
+          echo "🔄 Riza's Geography Feature: In Progress"
+        fi
+        
+        # Check Sylvian's weather map feature
+        if [ -f "features/sylvian_weather_map.php" ] && [ -f "assets/js/sylvian_weather_map.js" ] && [ -f "assets/css/sylvian_weather_map.css" ]; then
+          echo "✅ Sylvian's Weather Map Feature: Complete"
+          completed_features=$((completed_features + 1))
+        else
+          echo "🔄 Sylvian's Weather Map Feature: In Progress"
+        fi
+        
+        # Calculate progress
+        progress=$((completed_features * 100 / total_features))
+        echo ""
+        echo "📈 Overall Progress: $completed_features/$total_features features ($progress%)"
+        
+        if [ $completed_features -eq $total_features ]; then
+          echo "🎉 All features complete! Ready for final testing and deployment."
+        else
+          remaining=$((total_features - completed_features))
+          echo "🔄 $remaining features remaining"
+        fi

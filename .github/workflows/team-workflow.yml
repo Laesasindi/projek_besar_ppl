@@ -1,0 +1,289 @@
+name: Team Collaboration Workflow
+
+on:
+  push:
+    branches: [ main, develop, feature/* ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  # Quick validation for feature branches
+  quick-check:
+    name: Quick Validation
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/heads/feature/')
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.1
+        extensions: mbstring, xml, ctype, iconv, intl, pdo, curl
+    
+    - name: PHP Syntax Check
+      run: |
+        echo "🔍 Checking PHP syntax..."
+        find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \;
+        echo "✅ PHP syntax check completed"
+    
+    - name: Check File Structure
+      run: |
+        echo "📁 Checking project structure..."
+        
+        # Check required directories
+        for dir in "functions" "features" "assets/css" "assets/js" "tests"; do
+          if [ -d "$dir" ]; then
+            echo "✅ Directory $dir exists"
+          else
+            echo "❌ Directory $dir missing"
+            exit 1
+          fi
+        done
+        
+        # Check required files
+        for file in "index.php" "config.php" "process.php" "composer.json" "phpunit.xml"; do
+          if [ -f "$file" ]; then
+            echo "✅ File $file exists"
+          else
+            echo "❌ File $file missing"
+            exit 1
+          fi
+        done
+    
+    - name: Team Member File Check
+      run: |
+        echo "👥 Checking team member files..."
+        
+        # Paskah's files
+        if [ -f "features/paskah_search.php" ] && [ -f "assets/js/paskah_search.js" ] && [ -f "assets/css/paskah_search.css" ]; then
+          echo "✅ Paskah's search feature files complete"
+        else
+          echo "⚠️ Paskah's search feature files incomplete"
+        fi
+        
+        # Riza's files
+        if [ -f "features/riza_geography_enhanced.php" ] && [ -f "assets/js/riza_geography.js" ] && [ -f "assets/css/riza_geography.css" ]; then
+          echo "✅ Riza's geography feature files complete"
+        else
+          echo "⚠️ Riza's geography feature files incomplete"
+        fi
+        
+        # Sylvian's files
+        if [ -f "features/sylvian_weather_map.php" ] && [ -f "assets/js/sylvian_weather_map.js" ] && [ -f "assets/css/sylvian_weather_map.css" ]; then
+          echo "✅ Sylvian's weather map feature files complete"
+        else
+          echo "⚠️ Sylvian's weather map feature files incomplete"
+        fi
+
+  # Full testing for main branches
+  full-test:
+    name: Full Test Suite
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.2
+        extensions: mbstring, xml, ctype, iconv, intl, pdo, curl
+        coverage: xdebug
+    
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+    
+    - name: Run PHPUnit Tests
+      run: |
+        echo "🧪 Running PHPUnit tests..."
+        vendor/bin/phpunit --configuration phpunit.xml --coverage-text
+    
+    - name: Test API Functions
+      run: |
+        echo "🌐 Testing API functions..."
+        php -r "
+        require_once 'config.php';
+        require_once 'functions/weather_api.php';
+        require_once 'functions/geography_api.php';
+        require_once 'functions/validator.php';
+        
+        echo 'Testing weather API function...' . PHP_EOL;
+        if (function_exists('getWeatherData')) {
+          echo '✅ Weather API function exists' . PHP_EOL;
+        } else {
+          echo '❌ Weather API function missing' . PHP_EOL;
+        }
+        
+        echo 'Testing geography API function...' . PHP_EOL;
+        if (function_exists('getGeographyData')) {
+          echo '✅ Geography API function exists' . PHP_EOL;
+        } else {
+          echo '❌ Geography API function missing' . PHP_EOL;
+        }
+        
+        echo 'Testing validator functions...' . PHP_EOL;
+        if (function_exists('validateInput')) {
+          echo '✅ Validator function exists' . PHP_EOL;
+        } else {
+          echo '❌ Validator function missing' . PHP_EOL;
+        }
+        "
+
+  # Code review helper
+  code-review:
+    name: Code Review Helper
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Get changed files
+      id: changed-files
+      run: |
+        echo "Changed files in this PR:"
+        git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
+        
+        # Check if any PHP files were changed
+        if git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -q "\.php$"; then
+          echo "php_changed=true" >> $GITHUB_OUTPUT
+        fi
+        
+        # Check if any JS files were changed
+        if git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -q "\.js$"; then
+          echo "js_changed=true" >> $GITHUB_OUTPUT
+        fi
+        
+        # Check if any CSS files were changed
+        if git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -q "\.css$"; then
+          echo "css_changed=true" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: PHP Code Review
+      if: steps.changed-files.outputs.php_changed == 'true'
+      run: |
+        echo "🔍 Reviewing PHP changes..."
+        
+        # Check for common issues
+        echo "Checking for common PHP issues..."
+        
+        # Check for PHP opening tags
+        if git diff ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -q "<?php"; then
+          echo "✅ PHP opening tags found"
+        fi
+        
+        # Check for potential security issues
+        if git diff ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -i "eval\|exec\|system\|shell_exec"; then
+          echo "⚠️ Potential security risk: Found eval/exec/system calls"
+        fi
+        
+        # Check for error handling
+        if git diff ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -q "try\|catch\|throw"; then
+          echo "✅ Error handling found"
+        fi
+    
+    - name: Frontend Code Review
+      if: steps.changed-files.outputs.js_changed == 'true' || steps.changed-files.outputs.css_changed == 'true'
+      run: |
+        echo "🎨 Reviewing frontend changes..."
+        
+        # Check for console.log statements
+        if git diff ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -q "console\.log"; then
+          echo "⚠️ Found console.log statements - consider removing for production"
+        fi
+        
+        # Check for responsive design
+        if git diff ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -q "@media"; then
+          echo "✅ Responsive design considerations found"
+        fi
+
+  # Deployment readiness check
+  deployment-check:
+    name: Deployment Readiness
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: [full-test]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Check deployment requirements
+      run: |
+        echo "🚀 Checking deployment readiness..."
+        
+        # Check if all team features are present
+        missing_features=0
+        
+        if [ ! -f "features/paskah_search.php" ]; then
+          echo "❌ Paskah's search feature missing"
+          missing_features=$((missing_features + 1))
+        fi
+        
+        if [ ! -f "features/riza_geography_enhanced.php" ]; then
+          echo "❌ Riza's geography feature missing"
+          missing_features=$((missing_features + 1))
+        fi
+        
+        if [ ! -f "features/sylvian_weather_map.php" ]; then
+          echo "❌ Sylvian's weather map feature missing"
+          missing_features=$((missing_features + 1))
+        fi
+        
+        if [ $missing_features -eq 0 ]; then
+          echo "✅ All team features present - Ready for deployment!"
+        else
+          echo "⚠️ $missing_features team features missing"
+        fi
+        
+        # Check documentation
+        if [ -f "PROJECT_SUMMARY.md" ] && [ -f "TEAM_TASKS.md" ] && [ -f "FUNCTIONS_DOCUMENTATION.md" ]; then
+          echo "✅ Documentation complete"
+        else
+          echo "⚠️ Some documentation files missing"
+        fi
+    
+    - name: Create deployment summary
+      run: |
+        echo "📋 Deployment Summary" > deployment-summary.md
+        echo "===================" >> deployment-summary.md
+        echo "" >> deployment-summary.md
+        echo "**Commit:** ${{ github.sha }}" >> deployment-summary.md
+        echo "**Date:** $(date)" >> deployment-summary.md
+        echo "**Branch:** ${{ github.ref_name }}" >> deployment-summary.md
+        echo "" >> deployment-summary.md
+        echo "**Team Features Status:**" >> deployment-summary.md
+        
+        if [ -f "features/paskah_search.php" ]; then
+          echo "- ✅ Paskah's Search Feature" >> deployment-summary.md
+        else
+          echo "- ❌ Paskah's Search Feature" >> deployment-summary.md
+        fi
+        
+        if [ -f "features/riza_geography_enhanced.php" ]; then
+          echo "- ✅ Riza's Geography Feature" >> deployment-summary.md
+        else
+          echo "- ❌ Riza's Geography Feature" >> deployment-summary.md
+        fi
+        
+        if [ -f "features/sylvian_weather_map.php" ]; then
+          echo "- ✅ Sylvian's Weather Map Feature" >> deployment-summary.md
+        else
+          echo "- ❌ Sylvian's Weather Map Feature" >> deployment-summary.md
+        fi
+        
+        cat deployment-summary.md
+    
+    - name: Upload deployment summary
+      uses: actions/upload-artifact@v3
+      with:
+        name: deployment-summary
+        path: deployment-summary.md

@@ -1,0 +1,52 @@
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient background -->
+  <defs>
+    <linearGradient id="sunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cloudGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#F0F8FF;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main circle background -->
+  <circle cx="18" cy="18" r="16" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  
+  <!-- Sun -->
+  <circle cx="14" cy="14" r="6" fill="url(#sunGradient)"/>
+  
+  <!-- Sun rays -->
+  <g stroke="url(#sunGradient)" stroke-width="1.5" stroke-linecap="round" opacity="0.8">
+    <line x1="14" y1="4" x2="14" y2="6"/>
+    <line x1="14" y1="22" x2="14" y2="24"/>
+    <line x1="4" y1="14" x2="6" y2="14"/>
+    <line x1="22" y1="14" x2="24" y2="14"/>
+    <line x1="7.2" y1="7.2" x2="8.4" y2="8.4"/>
+    <line x1="19.6" y1="19.6" x2="20.8" y2="20.8"/>
+    <line x1="7.2" y1="20.8" x2="8.4" y2="19.6"/>
+    <line x1="19.6" y1="8.4" x2="20.8" y2="7.2"/>
+  </g>
+  
+  <!-- Cloud -->
+  <g fill="url(#cloudGradient)">
+    <circle cx="20" cy="22" r="4.5"/>
+    <circle cx="25" cy="21" r="5.5"/>
+    <circle cx="30" cy="22" r="4"/>
+    <rect x="15.5" y="22" width="14.5" height="4.5" rx="2.25"/>
+  </g>
+  
+  <!-- Cloud shadow/depth -->
+  <g fill="rgba(255,255,255,0.6)" opacity="0.7">
+    <circle cx="24" cy="20" r="3.5"/>
+    <ellipse cx="22" cy="24" rx="8" ry="1.5"/>
+  </g>
+  
+  <!-- Sparkle effects -->
+  <g fill="rgba(255,255,255,0.8)">
+    <circle cx="8" cy="8" r="0.8"/>
+    <circle cx="28" cy="10" r="0.6"/>
+    <circle cx="6" cy="26" r="0.5"/>
+  </g>
+</svg>

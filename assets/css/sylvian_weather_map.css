@@ -1,0 +1,98 @@
+/**
+ * FILE: assets/css/sylvian_weather_map.css
+ * AUTHOR: Sylvian - Anggota Tim
+ * FUNGSI: Styling untuk fitur Peta Cuaca
+ * DESKRIPSI: CSS khusus untuk komponen peta cuaca interaktif
+ * 
+ * TUGAS SYLVIAN:
+ * 1. Buat styling untuk map container yang responsive
+ * 2. Implementasikan custom map controls styling
+ * 3. Buat legend design yang menarik
+ * 4. Tambahkan marker popup styling
+ * 5. Implementasikan loading states untuk map
+ * 6. Buat mobile-friendly map interface
+ */
+
+/* TODO SYLVIAN: Implementasikan CSS untuk peta cuaca */
+
+/* Map Container */
+.weather-map-container {
+    /* TODO: Styling container utama peta */
+}
+
+/* Map Canvas */
+.map-canvas {
+    /* TODO: Styling area peta */
+    /* Pastikan height dan width sesuai */
+}
+
+/* Map Controls */
+.map-controls {
+    /* TODO: Styling controls (zoom, layer toggle) */
+}
+
+/* Map Legend */
+.map-legend {
+    /* TODO: Styling legend cuaca */
+}
+
+/* Weather Markers */
+.weather-marker {
+    /* TODO: Styling custom markers */
+}
+
+/* Marker Popup */
+.marker-popup {
+    /* TODO: Styling popup info cuaca */
+}
+
+/* Layer Controls */
+.layer-control {
+    /* TODO: Styling layer toggle buttons */
+}
+
+/* Temperature Scale */
+.temperature-scale {
+    /* TODO: Styling color scale untuk temperature */
+}
+
+/* Wind Indicators */
+.wind-indicator {
+    /* TODO: Styling indikator arah angin */
+}
+
+/* Loading States */
+.map-loading {
+    /* TODO: Styling loading animation untuk peta */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    /* TODO: Mobile responsive styles */
+    
+    .map-canvas {
+        /* TODO: Adjust map size for mobile */
+    }
+    
+    .map-controls {
+        /* TODO: Mobile-friendly controls */
+    }
+    
+    .map-legend {
+        /* TODO: Compact legend for mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    /* TODO: Small mobile adjustments */
+}
+
+/* 
+CATATAN UNTUK SYLVIAN:
+- Gunakan Leaflet CSS sebagai base (jika menggunakan Leaflet)
+- Implementasikan custom marker icons
+- Buat smooth transitions untuk layer changes
+- Pastikan map responsive di semua device
+- Test performance dengan banyak markers
+- Implementasikan touch gestures untuk mobile
+*/

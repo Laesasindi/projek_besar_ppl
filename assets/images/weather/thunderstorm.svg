@@ -1,0 +1,25 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark storm cloud -->
+  <g fill="#2F4F4F">
+    <circle cx="35" cy="45" r="15"/>
+    <circle cx="50" cy="40" r="18"/>
+    <circle cx="65" cy="42" r="16"/>
+    <circle cx="80" cy="45" r="14"/>
+    <rect x="20" y="45" width="60" height="15" rx="7"/>
+  </g>
+  
+  <!-- Lightning bolt -->
+  <path d="M 55 65 L 45 75 L 50 75 L 48 85 L 58 75 L 53 75 L 55 65 Z" fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
+  
+  <!-- Rain -->
+  <g stroke="#4682B4" stroke-width="2" stroke-linecap="round">
+    <line x1="30" y1="65" x2="28" y2="80"/>
+    <line x1="40" y1="70" x2="38" y2="85"/>
+    <line x1="60" y1="70" x2="58" y2="85"/>
+    <line x1="70" y1="65" x2="68" y2="80"/>
+    <line x1="80" y1="70" x2="78" y2="85"/>
+  </g>
+  
+  <!-- Lightning glow -->
+  <path d="M 55 65 L 45 75 L 50 75 L 48 85 L 58 75 L 53 75 L 55 65 Z" fill="#FFD700" opacity="0.3" transform="scale(1.2) translate(-5, -3)"/>
+</svg>

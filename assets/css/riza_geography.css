@@ -1,0 +1,113 @@
+/**
+ * FILE: assets/css/riza_geography.css
+ * AUTHOR: Riza - Anggota Tim
+ * FUNGSI: Styling untuk fitur Geography Enhanced
+ * DESKRIPSI: CSS khusus untuk komponen geografi lanjutan
+ * 
+ * TUGAS RIZA:
+ * 1. Buat styling untuk advanced search form
+ * 2. Implementasikan chart/visualization styling
+ * 3. Buat comparison table design
+ * 4. Tambahkan interactive elements styling
+ * 5. Implementasikan responsive design
+ * 6. Buat loading states dan animations
+ */
+
+/* TODO RIZA: Implementasikan CSS untuk geography enhanced */
+
+/* Geography Search Container */
+.geography-search-container {
+    /* TODO: Styling container pencarian */
+}
+
+/* Advanced Search Form */
+.geography-advanced-form {
+    /* TODO: Styling form pencarian advanced */
+}
+
+/* Country Autocomplete */
+.country-autocomplete {
+    /* TODO: Styling autocomplete dropdown */
+}
+
+/* Filter Controls */
+.geography-filters {
+    /* TODO: Styling filter controls */
+}
+
+/* Comparison Container */
+.country-comparison {
+    /* TODO: Styling comparison layout */
+}
+
+/* Comparison Table */
+.comparison-table {
+    /* TODO: Styling tabel perbandingan */
+}
+
+/* Data Visualization */
+.data-visualization {
+    /* TODO: Styling container charts */
+}
+
+/* Chart Container */
+.chart-container {
+    /* TODO: Styling individual charts */
+}
+
+/* Geography Cards */
+.geography-card {
+    /* TODO: Styling kartu informasi negara */
+}
+
+/* Nearby Countries */
+.nearby-countries {
+    /* TODO: Styling negara tetangga */
+}
+
+/* Interactive Elements */
+.interactive-map {
+    /* TODO: Styling peta interaktif */
+}
+
+/* Data Tables */
+.data-table {
+    /* TODO: Styling tabel data */
+}
+
+/* Export Controls */
+.export-controls {
+    /* TODO: Styling tombol export */
+}
+
+/* Loading States */
+.geography-loading {
+    /* TODO: Styling loading animations */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    /* TODO: Mobile responsive styles */
+    
+    .comparison-table {
+        /* TODO: Mobile-friendly table */
+    }
+    
+    .chart-container {
+        /* TODO: Mobile chart adjustments */
+    }
+}
+
+@media (max-width: 480px) {
+    /* TODO: Small mobile adjustments */
+}
+
+/* 
+CATATAN UNTUK RIZA:
+- Gunakan CSS Grid untuk complex layouts
+- Implementasikan smooth transitions
+- Buat accessible color schemes untuk charts
+- Test dengan berbagai data sizes
+- Implementasikan print-friendly styles
+- Gunakan CSS custom properties untuk theming
+*/

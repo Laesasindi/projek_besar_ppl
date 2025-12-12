@@ -1,0 +1,21 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sun rays -->
+  <g stroke="#FFD700" stroke-width="3" stroke-linecap="round">
+    <line x1="60" y1="10" x2="60" y2="20"/>
+    <line x1="60" y1="100" x2="60" y2="110"/>
+    <line x1="10" y1="60" x2="20" y2="60"/>
+    <line x1="100" y1="60" x2="110" y2="60"/>
+    <line x1="25.86" y1="25.86" x2="32.93" y2="32.93"/>
+    <line x1="87.07" y1="87.07" x2="94.14" y2="94.14"/>
+    <line x1="25.86" y1="94.14" x2="32.93" y2="87.07"/>
+    <line x1="87.07" y1="32.93" x2="94.14" y2="25.86"/>
+  </g>
+  
+  <!-- Sun circle -->
+  <circle cx="60" cy="60" r="25" fill="#FFD700" stroke="#FFA500" stroke-width="2"/>
+  
+  <!-- Sun face -->
+  <circle cx="52" cy="52" r="2" fill="#FF8C00"/>
+  <circle cx="68" cy="52" r="2" fill="#FF8C00"/>
+  <path d="M 50 68 Q 60 75 70 68" stroke="#FF8C00" stroke-width="2" fill="none" stroke-linecap="round"/>
+</svg>

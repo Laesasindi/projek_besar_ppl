@@ -1,0 +1,30 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark cloud -->
+  <g fill="#708090">
+    <circle cx="35" cy="50" r="15"/>
+    <circle cx="50" cy="45" r="18"/>
+    <circle cx="65" cy="47" r="16"/>
+    <circle cx="80" cy="50" r="14"/>
+    <rect x="20" y="50" width="60" height="15" rx="7"/>
+  </g>
+  
+  <!-- Rain drops -->
+  <g stroke="#4682B4" stroke-width="2" stroke-linecap="round">
+    <line x1="30" y1="70" x2="28" y2="85"/>
+    <line x1="40" y1="75" x2="38" y2="90"/>
+    <line x1="50" y1="70" x2="48" y2="85"/>
+    <line x1="60" y1="75" x2="58" y2="90"/>
+    <line x1="70" y1="70" x2="68" y2="85"/>
+    <line x1="80" y1="75" x2="78" y2="90"/>
+  </g>
+  
+  <!-- Rain drop effects -->
+  <g fill="#4682B4" opacity="0.6">
+    <circle cx="28" cy="87" r="1.5"/>
+    <circle cx="38" cy="92" r="1.5"/>
+    <circle cx="48" cy="87" r="1.5"/>
+    <circle cx="58" cy="92" r="1.5"/>
+    <circle cx="68" cy="87" r="1.5"/>
+    <circle cx="78" cy="92" r="1.5"/>
+  </g>
+</svg>
