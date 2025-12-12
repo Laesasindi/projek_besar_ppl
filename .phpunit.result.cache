@@ -1,1 +1,1 @@
-{"version":1,"defects":[],"times":{"FileTypeTest::test_files_exist":0.009,"FileTypeTest::test_php_files_contain_php_code":0.002,"FileTypeTest::test_api_key_not_empty":0.007,"FileTypeTest::test_response_code_validation":0.001,"FileTypeTest::test_valid_json_response":0.001}}
+{"version":1,"defects":[],"times":{"FileTypeTest::test_files_exist":0.01,"FileTypeTest::test_php_files_contain_php_code":0.001,"FileTypeTest::test_api_key_not_empty":0.005,"FileTypeTest::test_response_code_validation":0.001,"FileTypeTest::test_valid_json_response":0.001}}

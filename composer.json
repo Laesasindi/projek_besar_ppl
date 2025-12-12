@@ -17,6 +17,8 @@
         ]
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "phpunit",
+        "test-simple": "php run-tests.php",
+        "syntax-check": "find . -name '*.php' -not -path './vendor/*' -exec php -l {} \\;"
     }
 }

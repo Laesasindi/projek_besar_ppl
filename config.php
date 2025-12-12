@@ -5,8 +5,10 @@
  * DESKRIPSI: Berisi konstanta dan konfigurasi yang digunakan di seluruh aplikasi
  */
 
-// Memulai session untuk menyimpan data sementara
-session_start();
+// Memulai session untuk menyimpan data sementara (hanya jika bukan CLI)
+if (php_sapi_name() !== 'cli') {
+    session_start();
+}
 
 // API Keys - Ganti dengan API key Anda sendiri
 // OpenWeatherMap API: https://openweathermap.org/api

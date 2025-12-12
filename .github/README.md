@@ -68,16 +68,31 @@ vendor/bin/phpunit
 ## 🧪 What Gets Tested
 
 - ✅ PHP syntax validation
-- ✅ PHPUnit tests execution  
-- ✅ API functions loading
-- ✅ Project structure validation
+- ✅ File existence checks
+- ✅ Function loading tests
+- ✅ Validator function tests
+- ✅ API configuration validation
+- ✅ PHPUnit tests (with fallback)
 
 ## 🚨 If Tests Fail
 
 1. Check the Actions tab in GitHub
 2. Look at the error messages
-3. Fix the issues locally
-4. Push again
+3. Test locally with: `composer test-simple`
+4. Fix the issues and push again
+
+## 🛠️ Local Testing Commands
+
+```bash
+# Run simple tests
+composer test-simple
+
+# Run PHPUnit tests
+composer test
+
+# Check PHP syntax
+composer syntax-check
+```
 
 ## 🎯 Benefits
 
