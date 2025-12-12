@@ -1,0 +1,74 @@
+name: Test Weather App
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    name: PHP Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.1
+        extensions: mbstring, xml, ctype, iconv, intl, pdo, curl
+    
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+    
+    - name: PHP Syntax Check
+      run: |
+        echo "🔍 Checking PHP syntax..."
+        find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \;
+        echo "✅ PHP syntax check completed"
+    
+    - name: Run PHPUnit Tests
+      run: |
+        echo "🧪 Running PHPUnit tests..."
+        vendor/bin/phpunit --configuration phpunit.xml
+        echo "✅ Tests completed"
+    
+    - name: Test API Functions
+      run: |
+        echo "🌐 Testing API functions..."
+        php -r "
+        require_once 'config.php';
+        require_once 'functions/weather_api.php';
+        require_once 'functions/geography_api.php';
+        require_once 'functions/validator.php';
+        echo '✅ All functions loaded successfully' . PHP_EOL;
+        "
+    
+    - name: Check Project Structure
+      run: |
+        echo "📁 Checking project structure..."
+        
+        # Check required directories
+        for dir in "functions" "features" "assets/css" "assets/js" "tests"; do
+          if [ -d "$dir" ]; then
+            echo "✅ Directory $dir exists"
+          else
+            echo "❌ Directory $dir missing"
+            exit 1
+          fi
+        done
+        
+        # Check required files
+        for file in "index.php" "config.php" "process.php" "composer.json" "phpunit.xml"; do
+          if [ -f "$file" ]; then
+            echo "✅ File $file exists"
+          else
+            echo "❌ File $file missing"
+            exit 1
+          fi
+        done
+        
+        echo "✅ Project structure is valid"
