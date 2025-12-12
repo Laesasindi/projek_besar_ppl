@@ -10,8 +10,8 @@ class ComposerStaticInitfbee484fbcb98ba45566f17e8eb69e9b
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         '5be8528844b0b23ea192655fa34dc194' => __DIR__ . '/../..' . '/config.php',
-        '963afc8ae74020c08d7e6896b53e1a41' => __DIR__ . '/../..' . '/functions/paskah_weather.php',
-        'debcc40e3117f8f6c58374009fb1895a' => __DIR__ . '/../..' . '/functions/riza_geography.php',
+        '3e5ceed01113aae4b3d896a5f4881618' => __DIR__ . '/../..' . '/functions/weather_api.php',
+        'dd0336972bc53fea2622b88608973ce3' => __DIR__ . '/../..' . '/functions/geography_api.php',
         '7543fd2ec60edac3cd6be08d57d951fb' => __DIR__ . '/../..' . '/functions/validator.php',
     );
 

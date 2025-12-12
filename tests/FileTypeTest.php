@@ -16,8 +16,8 @@ class FileTypeTest extends TestCase
     private $projectFiles = [
         'index.php',
         'config.php',
-        'functions/paskah_weather.php',   
-        'functions/riza_geography.php',     
+        'functions/weather_api.php',   
+        'functions/geography_api.php',     
         'functions/validator.php'
     ];
 

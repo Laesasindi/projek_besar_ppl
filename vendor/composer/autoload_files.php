@@ -9,7 +9,7 @@ return array(
     '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     'ec07570ca5a812141189b1fa81503674' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
     '5be8528844b0b23ea192655fa34dc194' => $baseDir . '/config.php',
-    '963afc8ae74020c08d7e6896b53e1a41' => $baseDir . '/functions/paskah_weather.php',
-    'debcc40e3117f8f6c58374009fb1895a' => $baseDir . '/functions/riza_geography.php',
+    '3e5ceed01113aae4b3d896a5f4881618' => $baseDir . '/functions/weather_api.php',
+    'dd0336972bc53fea2622b88608973ce3' => $baseDir . '/functions/geography_api.php',
     '7543fd2ec60edac3cd6be08d57d951fb' => $baseDir . '/functions/validator.php',
 );
